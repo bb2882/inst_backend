@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\FollowingResource;
-use App\Models\Followings;
+use App\Http\Resources\ProfileContentResource;
+use App\Models\ProfileContent;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class FollowingsController extends Controller
+class ProfileContentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $followings = Followings::all();
+        $followings = ProfileContent::all();
 
-        return FollowingResource::collection($followings);
+        return ProfileContentResource::collection($followings);
     }
 
     /**
@@ -31,7 +31,7 @@ class FollowingsController extends Controller
             return \response('No Username', Response::HTTP_NOT_FOUND);
         }
 
-        $following = Followings::create($request->only('username', 'description', 'profile'));
+        $following = ProfileContent::create($request->only('username', 'description', 'profile'));
 
         return response($following, Response::HTTP_CREATED);
     }
@@ -43,10 +43,10 @@ class FollowingsController extends Controller
      */
     public function show($id)
     {
-        if (Followings::find($id)) {
+        if (ProfileContent::find($id)) {
             return response('User Not Found', Response::HTTP_NOT_FOUND);
         }
-        return new FollowingResource(Followings::find($id));
+        return new ProfileContentResource(ProfileContent::find($id));
     }
 
     /**
@@ -58,7 +58,7 @@ class FollowingsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $following = Followings::find($id);
+        $following = ProfileContent::find($id);
 
         $following->update($request->only('username', 'description', 'profile'));
 
@@ -73,7 +73,7 @@ class FollowingsController extends Controller
      */
     public function destroy($id)
     {
-        Followings::destroy($id);
+        ProfileContent::destroy($id);
 
         return response('deleted', Response::HTTP_NO_CONTENT);
     }

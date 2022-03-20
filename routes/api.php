@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::apiResource('followings', \App\Http\Controllers\FollowingsController::class);
+Route::apiResource('followers', \App\Http\Controllers\FollowersController::class);
+Route::apiResource('profile-content', \App\Http\Controllers\ProfileContentController::class);
