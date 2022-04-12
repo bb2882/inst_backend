@@ -27,11 +27,11 @@ class ProfileContentController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->username) {
-            return \response('No Username', Response::HTTP_NOT_FOUND);
+        if (!$request->profile || !$request->url) {
+            return \response('image not found', Response::HTTP_NOT_FOUND);
         }
 
-        $following = ProfileContent::create($request->only('username', 'description', 'profile'));
+        $following = ProfileContent::create($request->only('url', 'profile'));
 
         return response($following, Response::HTTP_CREATED);
     }
@@ -44,7 +44,7 @@ class ProfileContentController extends Controller
     public function show($id)
     {
         if (ProfileContent::find($id)) {
-            return response('User Not Found', Response::HTTP_NOT_FOUND);
+            return response('Image not found', Response::HTTP_NOT_FOUND);
         }
         return new ProfileContentResource(ProfileContent::find($id));
     }
@@ -60,7 +60,7 @@ class ProfileContentController extends Controller
     {
         $following = ProfileContent::find($id);
 
-        $following->update($request->only('username', 'description', 'profile'));
+        $following->update($request->only('url', 'profile'));
 
         return response($following, Response::HTTP_ACCEPTED);
     }
